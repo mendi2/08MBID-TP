@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>08MBID - Visualización de datos</title>
+
+    <!-- load d3 and dimple libraries -->
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.3.0.min.js"></script>
+</head>
+<body>
+    <h1 class="titulo">¿Están presentes las aves durante todo el año en España? </h1>
+    <div class="cabecera">
+      <h4 class="main-fecha">Fecha: 02/07/2023</h4>
+      <h4>Nombre: Beatriz Torrecilla</h4>
+      <h4>Url: <a href="https://js-bmbcpy.stackblitz.io">
+        https://js-bmbcpy.stackblitz.io</a></h4>
+      <h4>GitHub: <a href="https://github.com/mendi2/08MBID-TP">                           
+        https://github.com/mendi2/08MBID-TP</a></h4>
+      <h4>Fuente Datos: <a href="https://www.gbif.org/"> https://www.gbif.org/ </a></h4>
+      <h4>Colab Tratamiento datos: <a href="https://colab.research.google.com/drive/181E3yaYV6WU5abRsyg4zDTj7xLpsXwDQ?usp=sharing">
+      https://colab.research.google.com/drive/181E3yaYV6WU5abRsyg4zDTj7xLpsXwDQ?usp=sharing</a> </h4>
+      <h4>Colab Creación de mapas: <a href="https://colab.research.google.com/drive/1kQ2UnPrqFAyYZ8olUFCqc313otZvmEmP?usp=sharing">https://colab.research.google.com/drive/1kQ2UnPrqFAyYZ8olUFCqc313otZvmEmP?usp=sharing</a> </h4>
+
+    </div>
+    <div >
+      <p><br><br>
+      <!-- ---------------------------------------------------------- -->
+      <hr><h2>1 - Introducción</h2><hr>        
+      <!-- ---------------------------------------------------------- -->
+      <p class="subtitulo">Contexto</p>
+      <div >
+        <p >La riqueza de la fauna ornitol&oacute;gica hace de Espa&ntilde;a el segundo pa&iacute;s de Europa con mayor diversidad. Con 622 especies, nuestro pa&iacute;s ocupa el segundo puesto con mayor variedad de especies de aves de Europa. As&iacute; lo registra la Lista de Aves 2021 que ha elaborado SEO Birdlife con af&aacute;n cient&iacute;fico y conservacionista, un listado que agrupa a todos los espec&iacute;menes observados al menos una vez desde 1800 en Espa&ntilde;a.</p>
+
+        <p >Los &uacute;ltimos <a href="https://www.annualreviews.org/doi/pdf/10.1146/annurev-environ-112420-014642">informes</a> sobre la situaci&oacute;n de las aves publicados en la revista cient&iacute;fica <em>Global Change Biology</em> y Science<em></em>, aseguran que&nbsp;algunas especies se han reducido hasta un 90&nbsp;por ciento en ciertas zonas de Europa y Norteam&eacute;rica desde 1980, debido a la p&eacute;rdida de h&aacute;bitat y los plaguicidas,&nbsp;e incluso amenazadas por los micropl&aacute;sticos&nbsp;o la&nbsp;caza de aves cantoras. Dentro de nuestras fronteras, el 21 por ciento de las aves de alta monta&ntilde;a han desaparecido en nuestra pen&iacute;nsula.</p>
+
+        <p ><span>A pesar de las cifras, los expertos creen que estamos a tiempo de revertir la situaci&oacute;n con sencillas medidas que podr&iacute;an marcar la diferencia, como apoyar a los cient&iacute;ficos con ciencia ciudadana,&nbsp;mantener a los gatos en el interior de los domicilios, poner se&ntilde;alizaciones en las ventanas para evitar las colisiones, colocar comederos en zonas donde escasee el alimento, evitar los envoltorios pl&aacute;sticos y los plaguicidas qu&iacute;micos.</span></p>
+        
+        <p >El <strong>turismo ornitol&oacute;gico</strong> es un tipo de turismo en auge que puede ayudar a la conservaci&oacute;n de las especies gracias a que los amantes de los p&aacute;jaros presentan una actitud muy comprometida con la conservaci&oacute;n de la naturaleza y se encuentran distribuidos por el mundo entero.</p>
+        <p >Espa&ntilde;a es uno de los principales destinos para la observaci&oacute;n de aves en Europa por ser uno de los lugares con mayor diversidad del continente europeo. Disfrutar de esta diversidad de aves de manera bien gestionada, puede fomentar su conservaci&oacute;n.</p>
+    
+        <p class="subtitulo">Objetivo</p>
+        <p >El <strong>objetivo</strong> de este trabajo es la <strong>divulgaci&oacute;n</strong> sobre ciertos aspectos de las aves como son su distribuci&oacute;n y sus patrones migratorios para contribuir al conocimiento general por parte de la poblaci&oacute;n. As&iacute;, cu&aacute;nto m&aacute;s conocimiento, m&aacute;s concienciaci&oacute;n ciudadana y m&aacute;s contribuci&oacute;n a la conservaci&oacute;n de las aves.</p>
+        <p >Por consiguiente, el <strong>p&uacute;blico objetivo</strong> de este trabajo es la poblaci&oacute;n en general.</p>
+        <p >La pen&iacute;nsula ib&eacute;rica alberga numerosas especies visitantes &nbsp;y constituye una zona de paso y descanso para numerosos migrantes sirviendo de puente entre &nbsp;el continente europeo y africano, y entre el oc&eacute;ano Atl&aacute;ntico y el mar Mediterr&aacute;neo.</p>
+        <p >Esto nos lleva a hacernos estas preguntas:</p>
+        <ul>
+            <li>&iquest;Todas las aves son migratorias?</li>
+            <li>&iquest;Tienen todas las aves el mismo patr&oacute;n migratorio?</li>
+            <li>&iquest;En qu&eacute; &eacute;poca del a&ntilde;o se produce la migraci&oacute;n?</li>
+            <li>¿Todas las aves se distribuyen en las mismas áreas geográficas?</li>
+
+        </ul>
+      </div>
+      <p><br><br>
+      <!-- ---------------------------------------------------------- -->
+      <hr><h2>2 - Metodología</h2><hr>
+      <!-- ---------------------------------------------------------- -->
+      <div>
+        <p class="subtitulo">Selección de herramientas</p>
+        Para la realización de este trabajo se han utilizado las herramientas que se describena a continuación
+        <p>
+        <b>DataWrapper</b> es una herramienta gratuita muy extendida que permite crear visualizaciones de datos. Se utiliza habitualmente por los profesionales relacionados con el mundo editorial periodístico. Resulta muy fácil de utilizar y no es necesario tener ningún conocimiento de ningún lenguaje de programación.
+        <p>
+
+        <b>Google Charts </b> se integra con el producto de hoja de cálculo, <b>Google Spreadsheets</b>. Así,  desde la hoja de cálculo se pueden incluir de una manera sencilla los gráficos disponibles en la librería Google Charts y al revés, desde los desarrollos y usando la librería, se puede acceder a los datos de las hojas de Google Spreadsheets. Además también se puede integrar en desarrollos con javascript y HTML.
+        <p>
+
+        <b>Folium</b> es una poderosa librería de visualización OpenSource que permite la creación de mapas interactivos. Mediante Folium podemos manipular los datos en Python y visualizar los resultados en Leaflet. Leaflet es una librería JavaScript que nos permite publicar mapas en la web de forma rápida y eficaz.
+        <p><br>
+
+          <p class="subtitulo">Selección de tipos de gráficos</p>
+        <p>
+        Además, se han seleccionado tres tipos de gráficos para ilustrar este trabajo. <br>
+        <p>
+        Por una lado, se ha elegido el <b>gráfico de barras</b> horizontales que permite comparar por meses las poblaciones de aves.<br>
+        <p>
+        Por otro lado, también se ha escogido un <b>gráfico de líneas múltiple</b> que permite ver la evolución a lo largo del año de las poblaciones de aves. Además, al representarse de forma conjunta se tiene una visión global de todos los casos estudiados.<br>
+        <p>
+        Finalmente, se han utilado dos tipos de mapas para representar las poblaciones en la península ibérica. De esta forma, mediante un <b>mapa de calor interactivo</b> se puede ver la evolución por meses de las poblaciones. Además también se ha utilizado un <b>mapa de distribución</b> en el que se pueden osbservar en qué puntos de la península se han observado los tres tipos de aves.
+          
+      </div>
+      <p><br><br>
+      <!-- ---------------------------------------------------------- -->
+      <hr><h2 class="text-title">3 - Resultados</h2><hr>
+      <!-- ---------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------
+      GRAFICOS DISTRIBUCIONES COMPARATIVA
+      --------------------------------------------------------------- -->
+      <p class="subtitulo">¿En qué época del año se produce la migración?</p>
+      <p>Existen dos épocas predominantes de desplazamientos: una durante el periodo febrero-abril y otra entre julio-octubre, adelantándose o retrasándose dependiendo del ciclo de vida de cada especie y de cómo varíe el clima cada año.
+      <p> En el siguiente gráfico se puede ver la evolución de la distribución de las poblaciones de gorriones, tórtolas y grullas a lo largo del añ0 2017.
+      <p> Se puede observar cómo la población de gorriones está presente durante todo el año. Las tórtolas sólo se observan desde los meses de febrero a octubre, siendo su presencia nula en los meses más fríos. 
+        <p>Sin embargo, las grullas están presentes desde septiembre hasta abril, siendo muy escasa o nula su presencia durante los meses más cálidos.
+        <p>
+      <iframe aria-label="Bar Chart" id="datawrapper-chart-FAPYI" src="https://datawrapper.dwcdn.net/ehpjy/2/" scrolling="no" frameborder="0" style="border: none;" width="600" height="404" data-external="1"></iframe>
+      
+      <p>
+      <div>
+        <p class="subtitulo">¿Todas las aves son migratorias? ¿Tienen todas las aves el mismo patrón migratorio?</p>
+        <p>Las migraciones de las aves ya no encierran incógnitas importantes. Sin embargo, su estudio constituye hoy día uno de los campos de investigación más activos.
+        <p>Un equipo de la Academia de Ciencias de China y la Universidad de Cardiff, ha realizado una investigación que evidencia de manera sólida la existencia de una especie de gen migratorio entre las aves. En la investigación se sugiere que este comportamiento migratorio está condicionado entre las aves a nivel genético. Este hallazgo se logró gracias al rastreo de halcones peregrinos, por medio de tecnología satelital. La información recabada se cruzó con la secuenciación del genoma de la especie, que sugiere que el código genético de las aves juega un papel fundamental para que éstas definan la longitud de sus rutas migratorias.
+        <p>El estudio fue publicado en la revista científica <a href="https://www.nature.com/articles/s41586-021-03265-0">Nature</a>, 
+
+        <p>
+        <p>Al observar las gráficas, podemos ver que las aves  se diferencian en varios grupos en cuanto a su fenología:
+          <ul><li><b>Aves residentes o sedentarias</b> son aquellas especies cuyas poblaciones viven todo el año en nuestro territorio, no manifestando por tanto conducta migratoria, como los <b>gorriones</b>.</li> 
+            <li><b>Aves migradoras estivales</b> son aquellas que crían en la península en la época de más calor, para después invernar en África. Es el caso de las <b>tórtolas</b>. </li>
+            <li><b>Aves invernantes</b> por el contrario otras especies viajan a sus cuarteles septentrionales para reproducirse, como las <b>grullas</b>.</li>
+          </ul>
+      </div>
+
+      
+      <!-- ----------------------------------------------------------
+      GRAFICO DISTRIBUCIONES 
+      --------------------------------------------------------------- -->
+      <p>En el siguiente gráfico se muestran el número de indivíduos de gorriones total observados por meses. Se puede apreciar que los gorriones están presentes durante todos los meses del año. Por tanto, son aves <b>residentes</b> y mantienen una población bastante estable, aunque se aprecia que hay más observaciones de indivíduos durante los meses de abril y mayo. Presumiblemente se deba a que durante esos mese se ha producido la cría y se observarán más aves, bien por ser nuevos indivíduos, o por que hay más movimiento de los mismos para ir en busca del alimento para las crías.
+      <p>
+         <iframe aria-label="Bar Chart" id="datawrapper-chart-FAPYI" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0dJG1rpeH39faHWp7596A3uTSyKqPnZOdac5caFOQ5Jt0OgeozxCgiz5YHDbZrbBfmObumHa5wN8y/pubchart?oid=1634738537&format=interactive" scrolling="no" frameborder="0" style="border: none;" width="600" height="404" data-external="1"></iframe>
+
+       <p>En el siguiente gráfico se muestran el número de indivíduos de <b>grullas</b> total observados por meses. Se puede observar cómo las grullas tiene mayor presencia durante los meses de Octubre a Marzo. Durante el resto de meses prácticamente no se han observado indivíduos de esta especie. Estos meses coinciden con la época más cálida en la península, lo cual nos hace suponer que estas aves no soportan el calor estival. Por tanto, son aves <b>invernantes.</b>
+      <p>  
+         <iframe aria-label="Bar Chart" id="datawrapper-chart-FAPYI" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0dJG1rpeH39faHWp7596A3uTSyKqPnZOdac5caFOQ5Jt0OgeozxCgiz5YHDbZrbBfmObumHa5wN8y/pubchart?oid=1218974737&format=interactive" scrolling="no" frameborder="0" style="border: none;" width="600" height="404" data-external="1"></iframe>
+
+      <p>En el siguiente gráfico se muestran el número de indivíduos de <b>tórtolas</b> total observados por meses. Se puede observar cómo las tórtolas tiene mayor presencia durante los meses de abril a septiembre. Durante el resto de meses prácticamente no se han observado indivíduos de esta especie. Estos meses coinciden con la época más fría en la península, lo cual nos hace suponer que estas aves no soportan el frío invernal. Por tanto, son aves <b>estivales.</b>
+      <p>  
+        <iframe aria-label="Bar Chart" id="datawrapper-chart-FAPYI" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0dJG1rpeH39faHWp7596A3uTSyKqPnZOdac5caFOQ5Jt0OgeozxCgiz5YHDbZrbBfmObumHa5wN8y/pubchart?oid=571477332&format=interactive" scrolling="no" frameborder="0" style="border: none;" width="600" height="404" data-external="1"></iframe>
+
+
+      <!-- ----------------------------------------------------------
+          MAPAS GORRIONES
+      --------------------------------------------------------------- -->
+      <p> En los siguientes mapas se puede observar cómo se distribuye geográficamente la población de <b>gorriones</b>. 
+        <p>Por un lado, tenemos un mapa de calor que muestra los individuos por cada mes del año 2017. Como se ha observado anteriormente, se trata de un ave <b>residente</b>, manteniendo una presencia uniforme durante todo el año.
+      <p>
+        <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_calor_gorrion.html"
+          style="width: 775px; height: 575px">
+        </iframe>
+        <p> Por otro lado, en el siguiente mapa se observa que los <b>gorriones</b> también se distribuyen por toda la geografía española.
+          <p>
+        <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_distribucion_gorrion.html"
+          style="width: 775px; height: 575px">
+        </iframe>
+
+      <!-- ----------------------------------------------------------
+          MAPAS GRULLAS
+      --------------------------------------------------------------- -->
+      <p><br>
+      <p> En los siguientes mapas se puede observar cómo se distribuye geográficamente la población de <b>grullas</b>. 
+      <p>Por un lado, tenemos un mapa de calor que muestra los individuos por cada mes del año 2017. Como se ha observado anteriormente, se trata de un ave <b>invernante</b>, manteniendo una presencia mayor durante los meses de invierno, coincidiendo con la época de más frío.
+      <p>
+      <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_calor_grullas.html"
+        style="width: 775px; height: 575px">
+      </iframe>
+      <p> Por otro lado, en el siguiente mapa se observa que las <b>grullas</b> no se distribuyen por toda la geografía española, alejándose de la zona norte para pasar el invierno. También se observan concentraciones mayores de indivíduos en lugares donde existen zonas de lagunas, que utilizan como protección para dormir ante posibles depredadores.
+        <p>
+      <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_distribucion_grullas.html"
+        style="width: 775px; height: 575px">
+      </iframe>
+
+      <!-- ----------------------------------------------------------
+          MAPAS TORTOLAS
+      --------------------------------------------------------------- -->
+      <p><br>
+      <p> En los siguientes mapas se puede observar cómo se distribuye geográficamente la población de <b>tórtolas</b>. 
+      <p>Por un lado, tenemos un mapa de calor que muestra los individuos por cada mes del año 2017. Al tratarse de un ave <b>estival</b>, mantiene una presencia mayor durante los meses de verano, coincidiendo con la época de más calor.
+      <p>
+      <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_calor_tortolas.html"
+        style="width: 775px; height: 575px">
+      </iframe>
+      <p>
+       Por otro lado, en el siguiente mapa se observa que las <b>tórtolas</b> también se distribuyen por toda la geografía española.
+        <p>
+      <iframe src="https://web-platform-vqy1sq.stackblitz.io/mapa_distribucion_tortolas.html"
+        style="width: 775px; height: 575px">
+      </iframe>
+      
+      <!-- ---------------------------------------------------------- -->
+      <p><br><br>
+      <hr><h2>4 - Conclusiones</h2><hr>
+      <div class="text">
+        <p>
+        La riqueza de la fauna ornitológica hace de España el segundo país de Europa con mayor diversidad. Pero debido a la pérdida de hábitat y los plaguicidas algunas especies se han reducido considerablemente. A pesar de las cifras, los expertos creen que estamos a tiempo de revertir la situación.
+        <p>
+        El turismo ornitológico es un tipo de turismo en auge que puede ayudar a la conservación de las especies gracias a que los amantes de los pájaros presentan una actitud muy comprometida con la conservación de la naturaleza y se encuentran distribuidos por el mund entero, siendo España es uno de los principales destinos para la observación de aves en Europa.
+        <p>
+        Con este trabajo se hace una labor de divulgación sobre ciertos aspectos de las aves como son su distribución y sus patrones migratorios para contribuir al conocimiento general por parte de la población. 
+        <p>
+        Así, con la ayuda de varios gráficos realizados con herramientas como DataWrapper , Google Charts o Folium se ha respondido a las siguientes cuestiones:
+        <ul>
+          <li>¿Todas las aves son migratorias? </li>
+          <li>¿Tienen todas las aves el mismo patrón migratorio?</li>
+          <li>¿En qué época del año se produce la migración?</li>
+        </ul>
+        <p>
+        Por un lado tenemos las aves <b>residentes</b>. Son aquellas que están presentes durante todo el año. Es decir, permanecen todo el año en sus áreas de cría. Un ejemplo de esta ave sería el gorrión común.
+        <p>
+        Por otro lado, están las aves <b>invernantes</b>. Este tipo de aves habitan en zonas más frías en el centro y norte de Europa y en la temporada de invierno migran hacia latitudes más meridionales donde encuentran mejores condiciones de vida, temperaturas más suaves y 
+        alimento. Un ejemplo es la Grulla común
+        <p>
+        Por último, tenemos las aves <b>estivales</b>. Son aves migradoras que pasan el invierno en África buscando latitudes más cálidas. Cuando se acerca la primavera emigran al hemisferio norte por ser la época de cría. Como ejemplo tenemos a la Tórtola.
+
+      </div>
+    </div>
+    </br> </br>
+  </body>
+</html>
